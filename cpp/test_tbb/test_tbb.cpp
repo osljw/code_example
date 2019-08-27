@@ -49,13 +49,37 @@ void test_wr() {
 
     {
         Table::const_accessor ca;
-        bool is_find = t.find(ca, 234); // if no a.release(), will block here
+        bool is_find = t.find(ca, 234); // will not block
         std::cout << "key=234 find:" << is_find << std::endl;
     }
     
     Table::const_accessor ca;
     t.find(ca, 123); // if no a.release(), will block here
     std::cout << "key:123" << "value:" << ca->second << std::endl;
+}
+
+void test_wre() {
+    Table t;
+    Table::accessor a;
+    t.insert(a, 123);
+    a->second = "hello tbb";
+    a.release();
+
+    //{
+    //    int ret = t.erase(123); // if no a.release(), will block here
+    //    std::cout << "key=123 erase:" << ret << std::endl;
+    //}
+
+    Table::const_accessor ca;
+    t.find(ca, 123);
+    std::cout << "key:123 read " << "value:" << ca->second << std::endl;
+    //ca.release();
+
+    {
+        int ret = t.erase(123); // if no ca.release(), will block here
+        std::cout << "key=123 erase:" << ret << std::endl;
+    }
+    
 }
 
 void test_error() {
@@ -77,5 +101,7 @@ void test_error() {
 }
 
 int main() {
-    test_error();
+    //test_error();
+    //test_wr();
+    test_wre();
 }
