@@ -3,7 +3,7 @@ spark-submit \
     --conf spark.yarn.max.executor.failures=1 \
     --conf spark.port.maxRetries=10 \
     --class  "SparkApp"\
-    --master local \
+    --master yarn \
     --deploy-mode client \
     --driver-memory 1g \
     --executor-memory 1g \
