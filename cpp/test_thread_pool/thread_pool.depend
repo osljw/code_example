@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1538300955 source:d:\workspace\workspace_cpp\thread_pool\main.cpp
+	<iostream>
+	"ThreadPool.h"
+	"blocking_counter.h"
+
+1534153149 d:\workspace\workspace_cpp\thread_pool\include\threadpool.h
+	<vector>
+	<queue>
+	<memory>
+	<thread>
+	<mutex>
+	<future>
+	<functional>
+	<stdexcept>
+	<iostream>
+	<condition_variable>
+
+1534153127 source:d:\workspace\workspace_cpp\thread_pool\src\threadpool.cpp
+	"ThreadPool.h"
+
+1538300834 d:\workspace\workspace_cpp\thread_pool\blocking_counter.h
+	<mutex>
+	<condition_variable>
+
