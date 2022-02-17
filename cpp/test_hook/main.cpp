@@ -18,13 +18,15 @@ void hk_print_hello(Object* obj) {
     std::cout << "hooked hello =========" << std::endl;
 }
 
+Object g_obj;
+
 int main()
 {
 
     std::cout << "size of std::uintptr: " << sizeof(std::uintptr_t) << std::endl;
 
     // Object obj;  will not work, because ob.print_hello is static build, not use 
-    Object *obj = new Object;
+    Object *obj = &g_obj;
     obj->print_hello();
     std::cout << "obj addr: " << obj << std::endl;
 
