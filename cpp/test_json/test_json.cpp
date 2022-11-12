@@ -29,27 +29,27 @@ int main() {
         return -1;
     }
 
-    if (!json_doc.IsArray()) {
-        std::cout << "json_doc not array" << std::endl;
+    if (json_doc.IsArray()) {
+        std::cout << "json_doc is Array" << std::endl;
+
+        // json Array loop, use ConstValueIterator
+        for (rapidjson::Value::ConstValueIterator itr = json_doc.Begin(); itr != json_doc.End(); ++itr) {
+            const rapidjson::Value& attribute = *itr;
+
+            if(attribute.IsObject() && attribute.HasMember("name")) {
+                // json object to string
+                rapidjson::StringBuffer sbBuf;
+                rapidjson::Writer<rapidjson::StringBuffer> jWriter(sbBuf);
+                attribute.Accept(jWriter);
+                std::cout << "json object tostring: " << std::string(sbBuf.GetString()) << std::endl;
+
+                // json Object loop, use ConstMemberIterator
+                for (rapidjson::Value::ConstMemberIterator itr2 = attribute.MemberBegin(); itr2 != attribute.MemberEnd(); ++itr2) {
+                    std::cout << itr2->name.GetString() << " : " << itr2->value.GetString() << std::endl;
+                }
+            }
+        }
     }
 
-    for (rapidjson::Value::ConstValueIterator itr = json_doc.Begin(); itr != json_doc.End(); ++itr) {
-        const rapidjson::Value& attribute = *itr;
-
-        rapidjson::StringBuffer sbBuf;
-        rapidjson::Writer<rapidjson::StringBuffer> jWriter(sbBuf);
-        attribute.Accept(jWriter);
-        std::string strTemp = std::string(sbBuf.GetString());
-        std::cout << "======" << strTemp << std::endl;
-
-        CHECK_JSON_MEMBER_EXIST(attribute, adPlanId);
-        CHECK_JSON_MEMBER_EXIST(attribute, hello);
-
-        //assert(attribute.IsObject()); // each attribute is an object
-        //for (rapidjson::Value::ConstMemberIterator itr2 = attribute.MemberBegin(); itr2 != attribute.MemberEnd(); ++itr2) {
-        //    std::cout << itr2->name.GetString() << " : " << itr2->value.GetString() << std::endl;
-        //}
-    }
-    std::cout << "json" << std::endl;
     return 0;
 }
